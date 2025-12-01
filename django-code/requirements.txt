@@ -1,0 +1,17 @@
+Django
+django-health-check
+Pillow
+python-dotenv
+mysqlclient
+Celery
+emoji
+underthesea
+fasttext
+huggingface_hub
+qrcode
+uvicorn
+redis
+python-slugify
+django-csp
+django-ratelimit
+django_redis
