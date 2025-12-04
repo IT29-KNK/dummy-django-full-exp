@@ -1,7 +1,8 @@
-__pycache__
+**/__pycache__
 .env
 .dev.env
-.celery.env
+.admin.env
+# .celery.env
 test.env
 test*.py
 **/test.py
@@ -10,5 +11,4 @@ web_env
 erd.jpeg
 dev.note.md
 *.bin
-**/staticfiles/admin/
-**/staticfiles/e_commerce/
+**/staticfiles/

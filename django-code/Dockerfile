@@ -16,9 +16,10 @@ RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
 # copy later
-COPY ./django-code/mysite ./mysite
-COPY ./django-code/e_commerce ./e_commerce
+COPY ./django-code/ /app
+
 COPY ./django-code/manage.py .
+COPY ./django-code/.admin.env ./.admin.env
 COPY ./django-code/.env ./.env
 COPY ./django-code/.celery.env ./.celery.env
 COPY ./django-code/entrypoint.sh /usr/local/bin/
@@ -43,5 +44,6 @@ COPY --from=builder /app /app
 COPY --from=builder /usr/local/bin/ /usr/local/bin/
 
 RUN chmod +x /usr/local/bin/entrypoint.sh
+RUN sed -i 's/\r$//' /usr/local/bin/entrypoint.sh
 
 ENTRYPOINT ["entrypoint.sh"]

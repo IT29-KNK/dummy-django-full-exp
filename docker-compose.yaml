@@ -24,13 +24,13 @@ services:
     build:
       context: .
       dockerfile: ./django-code/Dockerfile
-    # env_file:
-    #   - ./django-code/.env
     depends_on:
       mysql_ecomm:
         condition: service_healthy
     networks:
       - ecomm-network
+    volumes:
+      - static_data:/vol/web/static
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://0.0.0.0:8000/health || exit 1 "]
       interval: 15s
@@ -58,8 +58,6 @@ services:
     image: ecomm-django-image
     working_dir: /app
     entrypoint: celery -A mysite worker -l info
-    # env_file:
-    #   - ./django-code/.env
     depends_on:
       redis:
         condition: service_healthy
@@ -74,7 +72,7 @@ services:
     image: ecomm-django-gateway-image
     build:
       context: .
-      dockerfile: ./django-code/DockerfileGateway
+      dockerfile: ./nginx/Dockerfile
     ports:
       - "8080:80"
     depends_on:
@@ -82,13 +80,16 @@ services:
         condition: service_healthy
     networks:
       - ecomm-network
-
+    volumes:
+      - static_data:/vol/web/static
 
 networks:
   ecomm-network:
     driver: bridge
 
 volumes:
+  static_data:
+    driver: local
   mysql_data:
     driver: local
   redis_data:
